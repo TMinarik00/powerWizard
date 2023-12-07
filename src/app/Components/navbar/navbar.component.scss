@@ -1,0 +1,29 @@
+@import "../../app.component.scss";
+.navbar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: rgba($background-color, 0.6);
+  color: $secondary-color;
+  margin-bottom: 4rem;
+  border-bottom: 2px solid $primary-color;
+  transition: 0.3s all;
+
+  .navbar-items {
+    display: flex;
+    height: 100%; // Each item takes full height
+    font-size: 2rem;
+
+    .navbar-item {
+      margin-right: 1rem;
+      padding: 2rem 2.5rem; // Adjusted for a larger size
+      cursor: pointer;
+      display: flex;
+      align-items: center; // Center text vertically
+
+      &:hover {
+        @include hover();
+      }
+    }
+  }
+}
