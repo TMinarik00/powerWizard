@@ -25,7 +25,8 @@
   color: $secondary-color;
   padding: 2rem;
   width: 60rem;
-  height: 50rem;
+  height: 65rem;
   overflow-y: auto;
   border: 2px solid $primary-color;
+  @include scrollbar;
 }

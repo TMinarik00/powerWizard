@@ -4,7 +4,7 @@ import { Component } from '@angular/core';
   selector: 'app-navbar',
   template: `
     <nav class="navbar">
-      <div class="navbar-items">
+      <div class="navbar-items" [class.show]="isNavbarVisible">
         <div class="navbar-item" routerLink="/custom-training">
           Custom Trainings
         </div>
@@ -20,4 +20,10 @@ import { Component } from '@angular/core';
   `,
   styleUrls: ['navbar.component.scss'],
 })
-export class NavbarComponent {}
+export class NavbarComponent {
+  isNavbarVisible = false;
+
+  toggleNavbar() {
+    this.isNavbarVisible = !this.isNavbarVisible;
+  }
+}

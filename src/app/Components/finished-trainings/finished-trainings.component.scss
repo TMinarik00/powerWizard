@@ -1,120 +1,180 @@
 @import "../../app.component.scss";
 
-$primary-color: rgb(254, 88, 186);
-$secondary-color: rgb(245, 245, 245);
-$tertiary-color: rgb(49, 21, 80);
-$background-color: rgb(0, 0, 0);
-
-.exercise__list {
+.row {
   display: flex;
-  color: $secondary-color;
-  z-index: 3;
-  flex-wrap: wrap;
-  justify-content: center;
-  align-items: center;
-  max-height: 85vh;
-  margin-right: 10px;
+  flex-direction: row;
+  justify-content: space-around;
+}
 
-  &-item {
-    perspective: 1000px;
-    margin: 2rem;
+.card {
+  // FUNCTIONALITY
+  perspective: 150rem;
+  -moz-perspective: 150rem;
+  position: relative;
+  height: 48rem;
+  width: 35rem;
+  margin-top: 6rem;
+
+  &__side {
+    height: 52rem;
+    transition: all 0.8s ease;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    -webkit-backface-visibility: hidden;
+    backface-visibility: hidden;
+    border-radius: 3px;
+    overflow: hidden;
+    box-shadow: 0 1.5rem 4rem rgba(black, 0.15);
+
+    &--front {
+      background-color: rgba($background-color, 0.6);
+      color: $secondary-color;
+    }
+
+    &--back {
+      transform: rotateY(180deg);
+
+      background-image: linear-gradient(
+        to right bottom,
+        rgba(darken($primary-color, 20%), 0.8),
+        rgba($tertiary-color, 0.8)
+      );
+    }
   }
 
-  .card {
-    width: 35rem;
-    height: 45rem;
-    transform-style: preserve-3d;
-    transition: transform 0.3s ease-in-out;
-    text-align: center;
-    border-radius: 5px;
-    border: 2px solid $primary-color;
+  &:hover &__side--front {
+    transform: rotateY(-180deg);
+  }
 
-    &:hover {
-      transform: rotateY(180deg);
-    }
+  &:hover &__side--back {
+    transform: rotateY(0);
+  }
 
-    &--1 {
-      .card__face--front {
-        background-image: linear-gradient(
-          45deg,
-          rgba($primary-color, 0.6),
-          rgba($tertiary-color, 0.6)
-        );
-      }
-      .card__face--back {
-        background-image: linear-gradient(
-          45deg,
-          rgba($primary-color, 0.6),
-          rgba($tertiary-color, 0.6)
-        );
-      }
-    }
+  // FRONT SIDE STYLING
+  &__picture {
+    background-size: cover;
+    height: 23rem;
+    background-blend-mode: screen;
+    -webkit-clip-path: polygon(0 0, 100% 0, 100% 85%, 0 100%);
+    clip-path: polygon(0 0, 100% 0, 100% 85%, 0 100%);
+    border-top-left-radius: 3px;
+    border-top-right-radius: 3px;
 
-    &--2 {
-      .card__face--front {
-        background-image: linear-gradient(
-          45deg,
-          rgba($primary-color, 0.6),
-          rgba($tertiary-color, 0.6)
-        );
-      }
-      .card__face--back {
-        background-image: linear-gradient(
-          45deg,
-          rgba($primary-color, 0.6),
-          rgba($tertiary-color, 0.6)
-        );
-      }
-    }
+    background-image: linear-gradient(
+        to right bottom,
+        darken($primary-color, 25%),
+        $tertiary-color
+      ),
+      url(../../../assets/images/fit.png);
+  }
 
-    &--3 {
-      .card__face--front {
-        background-image: linear-gradient(
-          45deg,
-          rgba($background-color, 0.6),
-          rgba($primary-color, 0.6)
-        );
-      }
-      .card__face--back {
-        background-image: linear-gradient(
-          45deg,
-          rgba($background-color, 0.4),
-          rgba($primary-color, 0.6)
-        );
-      }
-    }
+  &__heading {
+    font-size: 2.8rem;
+    font-weight: 300;
+    text-transform: uppercase;
+    text-align: right;
+    color: $secondary-color;
+    position: absolute;
+    top: 12rem;
+    right: 2rem;
+    width: 75%;
+  }
 
-    &__face {
-      position: absolute;
-      width: 100%;
-      height: 100%;
-      backface-visibility: hidden;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      padding: 1rem;
-      background-color: rgba($background-color, 0.6);
+  &__heading-span {
+    padding: 1rem 1.5rem;
+    -webkit-box-decoration-break: clone;
+    box-decoration-break: clone;
 
-      &--front {
-        transform: rotateY(0deg);
-        justify-content: center;
+    background-image: linear-gradient(
+      to right bottom,
+      rgba(darken($primary-color, 25%), 0.85),
+      rgba(lighten($tertiary-color, 20%), 0.85)
+    );
+  }
 
-        h1 {
-          margin-bottom: 2rem;
+  &__details {
+    padding: 3rem;
+
+    ul {
+      list-style: none;
+      width: 80%;
+      margin: 0 auto;
+
+      li {
+        text-align: center;
+        font-size: 1.5rem;
+        padding: 1rem;
+
+        &:not(:last-child) {
+          border-bottom: 1px solid $primary-color;
         }
       }
+    }
+  }
+
+  // FRONT SIDE STYLING
+  &__cta {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 90%;
+    text-align: center;
+  }
+
+  &__quote {
+    text-align: center;
+    color: $secondary-color;
+    margin-bottom: 8rem;
+    text-transform: uppercase;
+    font-size: 2rem;
+    font-weight: 100;
+  }
+
+  //@include respond(tab-port) {
+  @media only screen and (max-width: 56.25em), only screen and (hover: none) {
+    height: auto;
+    border-radius: 3px;
+    background-color: $secondary-color;
+    box-shadow: 0 1.5rem 4rem rgba(black, 0.15);
+
+    &__side {
+      height: auto;
+      position: relative;
+      box-shadow: none;
 
       &--back {
-        transform: rotateY(180deg);
-        overflow-y: auto;
-        display: flex;
-        justify-content: space-around;
-
-        p {
-          margin: 2rem 0;
-          font-size: 1.5rem;
-        }
+        transform: rotateY(0);
+        clip-path: polygon(0 15%, 100% 0, 100% 100%, 0% 100%);
       }
+    }
+
+    &:hover &__side--front {
+      transform: rotateY(0);
+    }
+
+    &__details {
+      padding: 1rem 3rem;
+    }
+
+    // FRONT SIDE STYLING
+    &__cta {
+      position: relative;
+      top: 0%;
+      left: 0;
+      transform: translate(0);
+      width: 100%;
+      padding: 7rem 4rem 4rem 4rem;
+    }
+
+    &__price-box {
+      margin-bottom: 3rem;
+    }
+
+    &__price-value {
+      font-size: 4rem;
     }
   }
 }

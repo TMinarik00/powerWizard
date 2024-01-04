@@ -1,0 +1,83 @@
+@import "../../app.component.scss";
+
+.training__form {
+  margin: 5rem auto;
+  padding: 5rem;
+  display: flex;
+  flex-direction: column;
+  border: 1px solid $primary-color;
+  background-color: rgba($background-color, 0.6);
+  width: 100rem;
+  border-radius: 1.5rem;
+  max-height: 80vh;
+  overflow-y: auto;
+
+  @include scrollbar;
+
+  &--input {
+    display: inherit;
+
+    &-name,
+    &-days {
+      display: inherit;
+      flex-direction: column;
+      margin: 0 5rem;
+      color: white;
+      font-size: 2rem;
+
+      input,
+      select {
+        padding: 1rem;
+        border: none;
+        margin-top: 1rem;
+        border-radius: 1rem;
+      }
+
+      input {
+        width: 40rem;
+      }
+    }
+  }
+
+  &--container {
+    padding-top: 3rem;
+    margin: 0 5rem;
+  }
+
+  &--creator {
+    margin: 1rem 0;
+
+    &-day {
+      font-size: 2rem;
+      margin-bottom: 1rem;
+      color: $secondary-color;
+    }
+
+    &-input {
+      display: flex;
+      flex-direction: column;
+      font-size: 1.8rem;
+      color: $secondary-color;
+      margin: 1rem 0;
+
+      input {
+        padding: 1rem;
+        border: none;
+        border-radius: 1rem;
+        width: 20rem;
+      }
+    }
+
+    &-btn {
+      margin: 3rem 0;
+      font-size: 1.5rem;
+      padding: 1rem 2rem;
+    }
+  }
+
+  .btn-container {
+    display: flex;
+    justify-content: space-between;
+    margin-right: 7rem;
+  }
+}

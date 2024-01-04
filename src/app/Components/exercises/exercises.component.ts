@@ -4,15 +4,33 @@ import { IExercise } from 'src/Interface/Exercise';
 @Component({
   selector: 'app-exercises',
   template: `
+    <div class="filter-container">
+      <input
+        type="text"
+        [(ngModel)]="searchText"
+        (input)="filterExercises()"
+        placeholder="Search by exercise name"
+      />
+      <div class="filter-buttons">
+        <button
+          *ngFor="let muscleType of muscleTypes"
+          (click)="filterByMuscleType(muscleType)"
+        >
+          {{ muscleType }}
+        </button>
+      </div>
+    </div>
+
     <div class="exercise__list">
       <div class="exercise__list-item card" *ngFor="let exercise of exercises">
         <div class="card__face card__face--front">
           <h1>{{ exercise.name }}</h1>
           <h2>{{ exercise.muscleType }}</h2>
+          &nbsp;
         </div>
         <div class="card__face card__face--back">
           <p class="description">
-            {{ exercise.description }}
+            If you have any questions about this exercise
           </p>
           <button (click)="showDetails(exercise)" class="exercise__list-button">
             Show Details
@@ -20,6 +38,7 @@ import { IExercise } from 'src/Interface/Exercise';
         </div>
       </div>
     </div>
+
     <app-popup
       [show]="isDetailsShown"
       (close)="closeDetails()"
@@ -44,7 +63,63 @@ import { IExercise } from 'src/Interface/Exercise';
 export class ExercisesComponent {
   isDetailsShown = false;
   selectedExercise: IExercise | null = null;
+  selectedMuscleType: string | null = '';
+  searchText: string = '';
+  muscleTypes: string[] = [
+    'Back',
+    'Biceps',
+    'Triceps',
+    'Chest',
+    'Legs',
+    'Core',
+    'Shoulders',
+    'Obliques',
+    'Calves',
+    'Cardio',
+    'Forearms',
+    'Glutes',
+    'Lower Back',
+    'Hamstrings',
+  ];
+  exercises: IExercise[] = [];
 
+  ngOnInit() {
+    this.exercises = this.allExercises;
+  }
+
+  filterExercises() {
+    // Filter by name
+    const filteredByName = this.allExercises.filter(
+      (exercise) =>
+        exercise.name.toLowerCase().includes(this.searchText.toLowerCase()) &&
+        (!this.selectedMuscleType ||
+          exercise.muscleType
+            .toLowerCase()
+            .includes(this.selectedMuscleType.toLowerCase()))
+    );
+
+    // Filter by muscle type if a type is selected
+    this.exercises = this.selectedMuscleType
+      ? filteredByName.filter((exercise) =>
+          exercise.muscleType
+            .toLowerCase()
+            .includes(this.selectedMuscleType!.toLowerCase())
+        )
+      : filteredByName;
+  }
+
+  filterByMuscleType(muscleType: string) {
+    // If the clicked muscle type is already selected, clear the filter
+    if (this.selectedMuscleType === muscleType) {
+      this.selectedMuscleType = '';
+    } else {
+      this.selectedMuscleType = muscleType;
+    }
+
+    // After updating the selectedMuscleType, call filterExercises to apply the filter
+    this.filterExercises();
+  }
+  /////////////
   showDetails(exercise: IExercise) {
     this.selectedExercise = exercise;
     this.isDetailsShown = true;
@@ -54,7 +129,7 @@ export class ExercisesComponent {
     this.isDetailsShown = false;
   }
 
-  exercises: IExercise[] = [
+  allExercises: IExercise[] = [
     {
       name: 'Barbell Squat',
       muscleType: 'Legs',
