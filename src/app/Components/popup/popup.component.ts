@@ -1,11 +1,16 @@
-// PopupComponent
+// popup.component.ts
 import { Component, Input, Output, EventEmitter } from '@angular/core';
 
 @Component({
   selector: 'app-popup',
   template: `
     <div *ngIf="show" class="popup__backdrop" (click)="closePopup()">
-      <div class="popup__container" (click)="preventClosing($event)">
+      <div
+        [style.width.rem]="popupWidth"
+        [style.height.rem]="popupHeight"
+        class="popup__container"
+        (click)="preventClosing($event)"
+      >
         <ng-content></ng-content>
       </div>
     </div>
@@ -14,6 +19,8 @@ import { Component, Input, Output, EventEmitter } from '@angular/core';
 })
 export class PopupComponent {
   @Input() show!: boolean;
+  @Input() popupWidth: number = 65; // Default width
+  @Input() popupHeight: number = 60; // Default height
   @Output() close = new EventEmitter();
 
   closePopup() {
